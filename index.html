@@ -16,7 +16,7 @@
     </div>
     <div id="btn-container">
         <button id="generate" onclick="generateqr()">Generate</button>
-        <!-- <button id="downloadqrcode">Download</button> -->
+        <button id="downloadqrcode" onclick="downloadqr()">Download</button>
         <button id="clear" onclick="clearText()">Clear</button>
     </div>
     <footer>Dev by <a href="https://github.com/Callmeteddyfx">Teddy</a></footer>
@@ -53,15 +53,19 @@
 
     }
 
+    #btn-container{
+        display: flex;
+        flex-direction: column;
+    }
+
     #generate,#downloadqrcode,#clear{
         background-color: transparent;
         border: 1px solid black;
         border-radius: 0.5rem;
-        width: 8rem;
+        width: 16rem;
         height: 2rem;
         cursor: pointer;
         margin: 0.5rem;
-        margin-top: 1rem;
         font-family: "Montserrat", serif;
     }
 
@@ -99,6 +103,8 @@
 </body>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
 <script>
      let qrDiv = document.getElementById("qr-div-container");
      let text = document.getElementById("text-container");
@@ -126,6 +132,16 @@
     function clearText(){
         qrDiv.innerHTML = '';
         text.value = ''; 
+    }
+
+    function downloadqr(){
+            html2canvas(qrDiv).then(canvas => {
+        const imgData = canvas.toDataURL("image/png"); // Convert canvas to image
+        const link = document.createElement("a");
+        link.href = imgData;
+        link.download = "qrcode.png"; // Image file name
+        link.click();
+    });
     }
 </script>
 </html>
