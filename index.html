@@ -69,7 +69,13 @@
         font-family: "Montserrat", serif;
     }
 
+     #generate:hover,#downloadqrcode:hover,#clear:hover,#text-container:hover{
+        transition: all 0.3s;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+     }
+
     #qr-div-container{
+        cursor: pointer;
         background-color: white;
         width: 16rem;
         height: 16rem;
@@ -135,11 +141,13 @@
     }
 
     function downloadqr(){
+        let name = document.getElementById("text-container").value
+        name = name.split("/").filter(Boolean).pop();
             html2canvas(qrDiv).then(canvas => {
         const imgData = canvas.toDataURL("image/png"); // Convert canvas to image
         const link = document.createElement("a");
         link.href = imgData;
-        link.download = "qrcode.png"; // Image file name
+        link.download = name; // Image file name
         link.click();
     });
     }
